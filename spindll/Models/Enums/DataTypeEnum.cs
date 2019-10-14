@@ -8,6 +8,5 @@ namespace spindll.Enum {
 		Long,
 		String,
 		DateTime
-
 	}
 }
