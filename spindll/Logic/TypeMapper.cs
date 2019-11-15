@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using spindll.Enum;
+using System;
 
 namespace spindll.Logic {
 
@@ -24,12 +25,13 @@ namespace spindll.Logic {
 		public static DataTypeEnum parseCSharp(string typeString) {
 			var cSharpTypePairs = CSharpTypeMap();
 
-			var type = cSharpTypePairs["typeString"];
+			var type = cSharpTypePairs[typeString];
 			return type;
 		}
 
-		public static Dictionary<string, DataTypeEnum> CSharpTypeMap() {
-			public Dictionary<string, DataTypeEnum> cSharpTypePairs = new Dictionary<string, DataTypeEnum>();
+		public static Dictionary<string, DataTypeEnum> CSharpTypeMap()
+		{
+			var cSharpTypePairs = new Dictionary<string, DataTypeEnum>();
 
 			cSharpTypePairs.Add("string", DataTypeEnum.String);
 			cSharpTypePairs.Add("bool", DataTypeEnum.Bool);
@@ -39,7 +41,6 @@ namespace spindll.Logic {
 
 			return cSharpTypePairs;
 		}
+
 	}
-
-
 }
