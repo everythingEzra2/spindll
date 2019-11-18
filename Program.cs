@@ -20,8 +20,13 @@ namespace spindll
 
 		static List<ModelInfo> extractModels(List<Type> types) 
 		{
+			var testTargets = new List<string>() { "Dog", "Leaf" };
+
 			var modelList = new List<ModelInfo>();
-			var typeList = types.Where(t => t.BaseType?.FullName != "System.Enum").ToList();
+			var typeList = types
+				.Where(t => t.BaseType?.FullName != "System.Enum")
+				.Where(t => testTargets.Any(tt => t.AssemblyQualifiedName.Contains(tt)))
+				.ToList();
 
 			typeList.ForEach(t => {
 				var model = new ModelInfo(t);
