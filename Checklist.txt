@@ -1,0 +1,8 @@
+checklist
+-------------------------------------------
+
+[]	Nested properties
+[]  Dictionaries, lists, enumerations etc.
+[]  Lists of Child objects
+
+[]	string builder for class
