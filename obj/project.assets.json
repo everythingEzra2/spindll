@@ -364,30 +364,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jsumm\\.nuget\\packages\\": {},
+    "C:\\Users\\myR\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\_repo\\spindll\\spindll.csproj",
+      "projectUniqueName": "D:\\_repo\\spindll\\spindll.csproj",
       "projectName": "spindll",
-      "projectPath": "C:\\_repo\\spindll\\spindll.csproj",
-      "packagesPath": "C:\\Users\\jsumm\\.nuget\\packages\\",
-      "outputPath": "C:\\_repo\\spindll\\obj\\",
+      "projectPath": "D:\\_repo\\spindll\\spindll.csproj",
+      "packagesPath": "C:\\Users\\myR\\.nuget\\packages\\",
+      "outputPath": "D:\\_repo\\spindll\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\jsumm\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\myR\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
