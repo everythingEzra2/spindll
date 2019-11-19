@@ -53,7 +53,8 @@ namespace spindll.Logic {
 			cSharpTypePairs.Add("String", DataTypeEnum.String.ToString());
 			cSharpTypePairs.Add("Boolean", DataTypeEnum.Bool.ToString());
 			cSharpTypePairs.Add("DateTime", DataTypeEnum.DateTime.ToString());
-			cSharpTypePairs.Add("Int", DataTypeEnum.Int.ToString());
+			cSharpTypePairs.Add("Int32", DataTypeEnum.Int.ToString());
+			cSharpTypePairs.Add("Int64", DataTypeEnum.Int.ToString());
 			cSharpTypePairs.Add("Long", DataTypeEnum.Long.ToString());
 
 			return cSharpTypePairs;

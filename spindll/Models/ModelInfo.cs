@@ -10,7 +10,7 @@ namespace spindll.Models {
 		public List<PropertyInfo> Properties = new List<PropertyInfo>();
 
 		public ModelInfo(Type type) {
-			ModelName = type.FullName;
+			ModelName = type.FullName.Split('.').ToList().LastOrDefault(); ;
 
 			var properties = type.GetProperties().ToList();
 			

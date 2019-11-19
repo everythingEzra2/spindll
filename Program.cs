@@ -9,6 +9,8 @@ namespace spindll
 {
     class Program
     {
+		const string outputDirectory = @"C:\_repo\spindll\_testOutputs\";
+
         static void Main(string[] args)
         {
 			var types = ClassInspector.LoadDll(@"C:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll").ToList();											//40
@@ -42,6 +44,10 @@ namespace spindll
 				.ToDictionary(m => m.ModelName, m => buildClassString(m));
 				
 
+			foreach(var kvp in modelClassStrings) 
+			{
+				WriteStringToFile(kvp.Key, kvp.Value);
+			}
         }
 
 		static List<ModelInfo> extractModels(List<Type> types) 
@@ -74,6 +80,12 @@ namespace spindll
 			builder.AppendLine("\n}");
 
 			return builder.ToString();
+		}
+
+		static void WriteStringToFile(string filename, string content) 
+		{
+			var completeFilePath = $"{outputDirectory}{filename}.ts";
+			System.IO.File.WriteAllText(completeFilePath, content);
 		}
     }
 }

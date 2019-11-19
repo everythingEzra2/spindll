@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using spindll.Enum;
 
 namespace spindll.Models {
@@ -11,7 +14,6 @@ namespace spindll.Models {
 		public PropertyInfo(System.Reflection.PropertyInfo property) {
 			PropertyName = property.Name;
 			InputDataType = property.PropertyType.Name;
-			
 		}
 	}
 	
