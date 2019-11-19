@@ -1,12 +1,17 @@
+using spindll.Enum;
+
 namespace spindll.Models {
 
 	class PropertyInfo {
 		public string PropertyName;
-		public string DataType;
+		public string InputDataType;
+		public DataTypeEnum SystemDataType;
+		public string OutputDataType; 
 
 		public PropertyInfo(System.Reflection.PropertyInfo property) {
 			PropertyName = property.Name;
-			DataType = property.PropertyType.Name;
+			InputDataType = property.PropertyType.Name;
+			
 		}
 	}
 	

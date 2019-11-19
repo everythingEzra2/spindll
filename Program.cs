@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using spindll.Logic;
 using spindll.Models;
+using spindll.Enum;
 
 namespace spindll
 {
@@ -10,11 +11,36 @@ namespace spindll
     {
         static void Main(string[] args)
         {
-			var types = ClassInspector.LoadDll(@"C:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll").ToList();			//40
+			var types = ClassInspector.LoadDll(@"C:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll").ToList();												//40
 			// var types = ClassInspector.LoadDll(@"D:\_repo\f5saver\f5saver.api\F5Saver.Common\bin\Debug\netstandard2.0\F5Saver.Common.dll").ToList();			//tower
 			// var types = ClassInspector.LoadDll(@"/home/myr/_repo/f5saver/f5saver.api/F5Saver.Common/bin/Debug/netstandard2.0/F5Saver.Common.dll").ToList();	//xubuntu
 
 			var models = extractModels(types);
+
+			//convert types to System
+			var CSharpIn = new LanguagePair(LanguageEnum.CSharp, LanguageEnum.System);
+			var TypeScriptOut = new LanguagePair(LanguageEnum.System, LanguageEnum.TypeScript);
+			var languageDictionary = new LanguageMappingDictionary(CSharpIn, TypeScriptOut);
+			var inDict = languageDictionary[CSharpIn];
+			var outDict = languageDictionary.LanguageDictionary[TypeScriptOut];
+
+			// fill out intermediary types
+			models.ForEach(model => {
+				model.Properties.ForEach(prop => {
+					if (!inDict.ContainsKey(prop.InputDataType))
+						return;
+
+					var intermediaryType = inDict[prop.InputDataType];
+					prop.SystemDataType = (DataTypeEnum) System.Enum.Parse(typeof(Enum.DataTypeEnum) ,intermediaryType);
+					prop.OutputDataType = outDict[intermediaryType];
+				});
+			});
+
+			// build typescript class as string
+			var modelClassStrings = models
+				.ToDictionary(m => m.ModelName, m => buildClassString(m));
+				
+
         }
 
 		static List<ModelInfo> extractModels(List<Type> types) 
@@ -29,38 +55,19 @@ namespace spindll
 
 			return modelList;
 		}
+
+		static string buildClassString(ModelInfo model) 
+		{
+			String classString = string.Empty;
+			var builder = new System.Text.StringBuilder();
+
+			builder.AppendLine($"export class {model.ModelName} {{\n");
+			model.Properties.ForEach(p => {
+				builder.AppendLine($"\t{p.PropertyName}: {p.OutputDataType};");
+			});
+			builder.AppendLine("\n}");
+
+			return builder.ToString();
+		}
     }
 }
-
-// namespace spindll.Models {
-// 	class EnumInfo {
-// 		public string EnumName;
-// 		public Dictionary<int, string> Values;
-// 	}
-
-// 	class ModelInfo {
-// 		public string ModelName;
-// 		public List<PropertyInfo> Properties = new List<PropertyInfo>();
-
-// 		public ModelInfo(Type type) {
-// 			ModelName = type.FullName;
-
-// 			var properties = type.GetProperties().ToList();
-			
-// 			properties.ForEach(p => {
-// 				var prop = new PropertyInfo(p);
-// 				Properties.Add(prop);
-// 			});
-// 		}
-// 	}
-
-// 	class PropertyInfo {
-// 		public string PropertyName;
-// 		public string DataType;
-
-// 		public PropertyInfo(System.Reflection.PropertyInfo property) {
-// 			PropertyName = property.Name;
-// 			DataType = property.PropertyType.Name;
-// 		}
-// 	}
-// }

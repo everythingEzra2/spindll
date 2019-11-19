@@ -4,42 +4,72 @@ using System;
 
 namespace spindll.Logic {
 
-	public static class TypeMapper {
-		
+	public class LanguageMappingDictionary {
+		public Dictionary<LanguagePair, Dictionary<string, string>> LanguageDictionary = new Dictionary<LanguagePair, Dictionary<string, string>>();
 
+		public LanguageMappingDictionary(params LanguagePair[] languagePairs) {
+			foreach (var languagePair in languagePairs) {
+				var languageMap = getLanguagePairDictionary(languagePair);
+
+				LanguageDictionary.Add(languagePair, languageMap);
+			}
+		}
+
+		public Dictionary<string, string> this[LanguagePair languagePair] {
+			get => LanguageDictionary[languagePair];
+		}
+
+		private Dictionary<string, string> getLanguagePairDictionary(LanguagePair languagePair) {
+			// Input Language to System
+			if (languagePair.SourceLanguage == LanguageEnum.CSharp && languagePair.DestinationLanguage == LanguageEnum.System) {
+				return LanguageMappingProfiles.CSharpToSystemTypeMap();
+			}
+
+			// System to Output Language
+			if (languagePair.SourceLanguage == LanguageEnum.System && languagePair.DestinationLanguage == LanguageEnum.TypeScript) {
+				return LanguageMappingProfiles.SystemToTypeScriptTypeMap();
+			}
+
+			throw new Exception("type map not configured");
+		}
 	}
 
-	public class TypeMap {
+	public class LanguagePair {
 		public LanguageEnum SourceLanguage;
 		public LanguageEnum DestinationLanguage;
-		public Dictionary<string, DataTypeEnum> TypePairs = new Dictionary<string, DataTypeEnum>();
 
-		public TypeMap(LanguageEnum sourceLanguage, LanguageEnum destinationLanguage) {
+		public LanguagePair(LanguageEnum sourceLanguage, LanguageEnum destinationLanguage) {
 			SourceLanguage = sourceLanguage;
 			DestinationLanguage = destinationLanguage;
-
-			TypePairs.Add("string", DataTypeEnum.String);
-			TypePairs.Add("bool", DataTypeEnum.Bool);
 		}
+	}
 
-		public static DataTypeEnum parseCSharp(string typeString) {
-			var cSharpTypePairs = CSharpTypeMap();
+	public static class LanguageMappingProfiles {
 
-			var type = cSharpTypePairs[typeString];
-			return type;
-		}
-
-		public static Dictionary<string, DataTypeEnum> CSharpTypeMap()
+		public static Dictionary<string, string> CSharpToSystemTypeMap()
 		{
-			var cSharpTypePairs = new Dictionary<string, DataTypeEnum>();
+			var cSharpTypePairs = new Dictionary<string, string>();
 
-			cSharpTypePairs.Add("string", DataTypeEnum.String);
-			cSharpTypePairs.Add("bool", DataTypeEnum.Bool);
-			cSharpTypePairs.Add("datetime", DataTypeEnum.DateTime);
-			cSharpTypePairs.Add("int", DataTypeEnum.Int);
-			cSharpTypePairs.Add("long", DataTypeEnum.Long);
+			cSharpTypePairs.Add("String", DataTypeEnum.String.ToString());
+			cSharpTypePairs.Add("Boolean", DataTypeEnum.Bool.ToString());
+			cSharpTypePairs.Add("DateTime", DataTypeEnum.DateTime.ToString());
+			cSharpTypePairs.Add("Int", DataTypeEnum.Int.ToString());
+			cSharpTypePairs.Add("Long", DataTypeEnum.Long.ToString());
 
 			return cSharpTypePairs;
+		}
+
+		public static Dictionary<string, string> SystemToTypeScriptTypeMap()
+		{
+			var dataTypeMappings = new Dictionary<string, string>();
+
+			dataTypeMappings.Add(DataTypeEnum.String.ToString(), "string");
+			dataTypeMappings.Add(DataTypeEnum.Bool.ToString(), "boolean");
+			dataTypeMappings.Add(DataTypeEnum.DateTime.ToString(), "Date");
+			dataTypeMappings.Add(DataTypeEnum.Int.ToString(), "number");
+			dataTypeMappings.Add(DataTypeEnum.Long.ToString(), "number");
+
+			return dataTypeMappings;
 		}
 
 	}
