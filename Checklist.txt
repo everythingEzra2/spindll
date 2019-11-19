@@ -1,8 +1,25 @@
 checklist
 -------------------------------------------
 
-[]	Nested properties
-[]  Dictionaries, lists, enumerations etc.
-[]  Lists of Child objects
+// print
+[X]	string builder for class
 
-[]	string builder for class
+// core functionality
+[X]	basic/primative properties
+[]	Lists, enumerations, arrays, etc. (of simple/primative props)
+[]	Nullables
+[]	Nullable Classes
+[]	Child properties
+[]  Lists, arrays, enumerations, etc (of other Classes)
+[]  Dictionaries
+
+// display
+[]	Group Ids at top of file
+
+// enhancements
+[]  Allowexisting text to persist
+
+// v1.0 checkpoint!
+[] 	cleanup, reorganize, modularize!
+[]	setup watcher to watch for folder changes in certain folder!
+
