@@ -364,30 +364,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jsumm\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "/home/myr/.nuget/packages/": {},
+    "/usr/share/dotnet/sdk/NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\_repo\\spindll\\spindll.csproj",
+      "projectUniqueName": "/home/myr/_repo/spindll/spindll.csproj",
       "projectName": "spindll",
-      "projectPath": "C:\\_repo\\spindll\\spindll.csproj",
-      "packagesPath": "C:\\Users\\jsumm\\.nuget\\packages\\",
-      "outputPath": "C:\\_repo\\spindll\\obj\\",
+      "projectPath": "/home/myr/_repo/spindll/spindll.csproj",
+      "packagesPath": "/home/myr/.nuget/packages/",
+      "outputPath": "/home/myr/_repo/spindll/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "/usr/share/dotnet/sdk/NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\jsumm\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/home/myr/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -424,7 +422,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.0.100/RuntimeIdentifierGraph.json"
       }
     }
   }

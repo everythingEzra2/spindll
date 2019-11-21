@@ -9,13 +9,14 @@ namespace spindll
 {
     class Program
     {
-		const string outputDirectory = @"C:\_repo\spindll\_testOutputs\";
+		const string outputDirectory = @"/home/myr/_repo/spindll/_testOutputs/";
 
         static void Main(string[] args)
         {
-			var types = ClassInspector.LoadDll(@"C:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll").ToList();											//40
+			// var types = ClassInspector.LoadDll(@"C:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll").ToList();											//40
 			// var types = ClassInspector.LoadDll(@"D:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll").ToList();												//tower - spindll
 			// var types = ClassInspector.LoadDll(@"D:\_repo\f5saver\f5saver.api\F5Saver.Common\bin\Debug\netstandard2.0\F5Saver.Common.dll").ToList();			//tower - f5saver
+			var types = ClassInspector.LoadDll(@"/home/myr/_repo/spindll/bin/Debug/netcoreapp3.0/spindll.dll").ToList();										//xubuntu
 			// var types = ClassInspector.LoadDll(@"/home/myr/_repo/f5saver/f5saver.api/F5Saver.Common/bin/Debug/netstandard2.0/F5Saver.Common.dll").ToList();	//xubuntu
 
 			var models = extractModels(types);
@@ -30,12 +31,15 @@ namespace spindll
 			// fill out intermediary types
 			models.ForEach(model => {
 				model.Properties.ForEach(prop => {
-					if (!inDict.ContainsKey(prop.InputDataType))
-						return;
-
-					var intermediaryType = inDict[prop.InputDataType];
-					prop.SystemDataType = (DataTypeEnum) System.Enum.Parse(typeof(Enum.DataTypeEnum) ,intermediaryType);
-					prop.OutputDataType = outDict[intermediaryType];
+					if (inDict.ContainsKey(prop.InputDataType)) {
+						var intermediaryType = inDict[prop.InputDataType];
+						prop.SystemDataType = (DataTypeEnum) System.Enum.Parse(typeof(Enum.DataTypeEnum) ,intermediaryType);
+						prop.OutputDataType = outDict[intermediaryType];
+					} else {
+						var intermediaryType = prop.InputDataType;
+						prop.SystemDataType = DataTypeEnum.DirectMap;
+						prop.OutputDataType = intermediaryType;
+					}
 				});
 			});
 

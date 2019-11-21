@@ -56,6 +56,7 @@ namespace spindll.Logic {
 			cSharpTypePairs.Add("Int32", DataTypeEnum.Int.ToString());
 			cSharpTypePairs.Add("Int64", DataTypeEnum.Int.ToString());
 			cSharpTypePairs.Add("Long", DataTypeEnum.Long.ToString());
+			cSharpTypePairs.Add("List`1", DataTypeEnum.List.ToString());
 
 			return cSharpTypePairs;
 		}
@@ -69,6 +70,7 @@ namespace spindll.Logic {
 			dataTypeMappings.Add(DataTypeEnum.DateTime.ToString(), "Date");
 			dataTypeMappings.Add(DataTypeEnum.Int.ToString(), "number");
 			dataTypeMappings.Add(DataTypeEnum.Long.ToString(), "number");
+			dataTypeMappings.Add(DataTypeEnum.List.ToString(), "List*");
 
 			return dataTypeMappings;
 		}
