@@ -7,9 +7,11 @@ checklist
 // core functionality
 [X]	basic/primative properties
 []	Lists, enumerations, arrays, etc. (of simple/primative props)
+	// another prop holding other info like isEnumerable etc.
 []	Nullables
+	// another prop holding metadata like isNullable
 []	Nullable Classes
-[]	Child properties
+[X]	Child properties
 []  Lists, arrays, enumerations, etc (of other Classes)
 []  Dictionaries
 
