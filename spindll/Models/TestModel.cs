@@ -19,7 +19,7 @@ namespace spindll.Models
 		public Leaf FavoriteLeaf { get; set; }
 		public Leaf? currentLeaf { get; set; }
 
-		// public string testProp = "test";
+		public string testProp = "test2";
 	}
 
 	class Leaf

@@ -33,16 +33,6 @@ namespace spindll
 			models.ForEach(model => {
 				model.Properties.ForEach(prop => {
 					convertProperty(ref prop, inDict, outDict);
-					// if (inDict.ContainsKey(prop.InputDataType)) {
-					// 	// var intermediaryType = inDict[prop.InputDataType];
-					// 	// prop.SystemDataType = (DataTypeEnum) System.Enum.Parse(typeof(Enum.DataTypeEnum) ,intermediaryType);
-					// 	// prop.OutputDataType = outDict[intermediaryType];
-						
-					// } else {
-					// 	var intermediaryType = prop.InputDataType;
-					// 	prop.SystemDataType = DataTypeEnum.DirectMap;
-					// 	prop.OutputDataType = intermediaryType;
-					// }
 				});
 			});
 
