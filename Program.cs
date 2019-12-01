@@ -9,15 +9,15 @@ namespace spindll
 {
     class Program
     {
-		// const string outputDirectory = @"/home/myr/_repo/spindll/_testOutputs/";        //xubuntu
-		const string outputDirectory = @"C:\_repo\spindll\_testOutputs\";        //40
+		const string outputDirectory = @"/home/myr/_repo/spindll/_testOutputs/";        //xubuntu
+		// const string outputDirectory = @"C:\_repo\spindll\_testOutputs\";        //40
 
 		static void Main(string[] args)
         {
-			var types = ClassInspector.LoadDll(@"C:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll").ToList();											//40
+			// var types = ClassInspector.LoadDll(@"C:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll").ToList();											//40
 			// var types = ClassInspector.LoadDll(@"D:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll").ToList();												//tower - spindll
 			// var types = ClassInspector.LoadDll(@"D:\_repo\f5saver\f5saver.api\F5Saver.Common\bin\Debug\netstandard2.0\F5Saver.Common.dll").ToList();			//tower - f5saver
-			// var types = ClassInspector.LoadDll(@"/home/myr/_repo/spindll/bin/Debug/netcoreapp3.0/spindll.dll").ToList();										//xubuntu
+			var types = ClassInspector.LoadDll(@"/home/myr/_repo/spindll/bin/Debug/netcoreapp3.0/spindll.dll").ToList();										//xubuntu
 			// var types = ClassInspector.LoadDll(@"/home/myr/_repo/f5saver/f5saver.api/F5Saver.Common/bin/Debug/netstandard2.0/F5Saver.Common.dll").ToList();	//xubuntu
 
 			var models = extractModels(types);
@@ -32,15 +32,17 @@ namespace spindll
 			// fill out intermediary types
 			models.ForEach(model => {
 				model.Properties.ForEach(prop => {
-					if (inDict.ContainsKey(prop.InputDataType)) {
-						var intermediaryType = inDict[prop.InputDataType];
-						prop.SystemDataType = (DataTypeEnum) System.Enum.Parse(typeof(Enum.DataTypeEnum) ,intermediaryType);
-						prop.OutputDataType = outDict[intermediaryType];
-					} else {
-						var intermediaryType = prop.InputDataType;
-						prop.SystemDataType = DataTypeEnum.DirectMap;
-						prop.OutputDataType = intermediaryType;
-					}
+					convertProperty(ref prop, inDict, outDict);
+					// if (inDict.ContainsKey(prop.InputDataType)) {
+					// 	// var intermediaryType = inDict[prop.InputDataType];
+					// 	// prop.SystemDataType = (DataTypeEnum) System.Enum.Parse(typeof(Enum.DataTypeEnum) ,intermediaryType);
+					// 	// prop.OutputDataType = outDict[intermediaryType];
+						
+					// } else {
+					// 	var intermediaryType = prop.InputDataType;
+					// 	prop.SystemDataType = DataTypeEnum.DirectMap;
+					// 	prop.OutputDataType = intermediaryType;
+					// }
 				});
 			});
 
@@ -54,6 +56,24 @@ namespace spindll
 				WriteStringToFile(kvp.Key, kvp.Value);
 			}
         }
+
+		static void convertProperty(ref PropertyInfo prop, Dictionary<string, string> inDict, Dictionary<string, string> outDict) {
+			
+			if (inDict.ContainsKey(prop.InputDataType)) {
+				var intermediaryType = inDict[prop.InputDataType];
+				prop.SystemDataType = (DataTypeEnum) System.Enum.Parse(typeof(Enum.DataTypeEnum) ,intermediaryType);
+				prop.OutputDataType = outDict[intermediaryType];
+				
+			} else {
+				var intermediaryType = prop.InputDataType;
+				prop.SystemDataType = DataTypeEnum.DirectMap;
+				prop.OutputDataType = intermediaryType;
+			}
+
+			prop.TypeArgs.ForEach(subProp => {
+				convertProperty(ref subProp, inDict, outDict);
+			});
+		}
 
 		static List<ModelInfo> extractModels(List<Type> types) 
 		{
@@ -80,7 +100,31 @@ namespace spindll
 
 			builder.AppendLine($"export class {model.ModelName} {{\n");
 			model.Properties.ForEach(p => {
-				builder.AppendLine($"\t{p.PropertyName}: {p.OutputDataType};");
+
+				if (p.SystemDataType == Enum.DataTypeEnum.Array || 
+					p.SystemDataType == Enum.DataTypeEnum.List) {
+					builder.Append($"\t{p.PropertyName}: {p.TypeArgs.First().OutputDataType}[]");
+				} else {				
+					builder.Append($"\t{p.PropertyName}: {p.OutputDataType}");
+					
+					if (p.HasTypeArgs) {
+						
+						var length = p.TypeArgs.Count;
+						int iteration = 0;
+
+						builder.Append($"<");
+						p.TypeArgs.ForEach(ta => {
+							builder.Append(ta.OutputDataType);
+
+							iteration ++;
+							if (iteration < length)
+								builder.Append($",");
+						});
+						builder.Append($">");
+					}
+				}
+				
+				builder.AppendLine($";");
 			});
 			builder.AppendLine("\n}");
 

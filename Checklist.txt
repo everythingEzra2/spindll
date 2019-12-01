@@ -6,22 +6,23 @@ checklist
 
 // core functionality
 [X]	basic/primative properties
-[]	Lists, enumerations, arrays, etc. (of simple/primative props)
+[X]	Lists, enumerations, arrays, etc. (of simple/primative props)
 	// another prop holding other info like isEnumerable etc.
-[]	Nullables
+[X]	Nullables
 	// another prop holding metadata like isNullable
-[]	Nullable Classes
+[X]	Nullable Classes
 [X]	Child properties
-[]  Lists, arrays, enumerations, etc (of other Classes)
+[X]  Lists, arrays, enumerations, etc (of other Classes)
 []  Dictionaries
 
 // display
 []	Group Ids at top of file
 
 // enhancements
-[]  Allowexisting text to persist
+[]  Allow existing text to persist
 
 // v1.0 checkpoint!
 [] 	cleanup, reorganize, modularize!
 []	setup watcher to watch for folder changes in certain folder!
+[]  spindll input output
 

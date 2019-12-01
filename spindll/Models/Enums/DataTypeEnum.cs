@@ -3,6 +3,9 @@ using System;
 namespace spindll.Enum {
 
 	public enum DataTypeEnum {
+		// Default
+		Unknown,
+
 		// Primatives
 		Bool,
 		Int,
@@ -12,6 +15,7 @@ namespace spindll.Enum {
 
 		// List/Array/Enumerations
 		List,
+		Array,
 
 		// Class use
 		Class,

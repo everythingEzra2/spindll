@@ -15,8 +15,11 @@ namespace spindll.Models
 
 		public List<int> WhurlsInts { get; set; }
 		public List<Leaf> Leaves { get; set; }
+		public Leaf[] ArrayLeaves { get; set; }
 		public Leaf FavoriteLeaf { get; set; }
 		public Leaf? currentLeaf { get; set; }
+
+		// public string testProp = "test";
 	}
 
 	class Leaf

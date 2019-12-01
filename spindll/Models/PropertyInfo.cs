@@ -11,9 +11,21 @@ namespace spindll.Models {
 		public DataTypeEnum SystemDataType;
 		public string OutputDataType; 
 
+		public List<PropertyInfo> TypeArgs;
+
+		public bool HasTypeArgs { get => TypeArgs != null && TypeArgs.Count > 0;}
+
 		public PropertyInfo(System.Reflection.PropertyInfo property) {
 			PropertyName = property.Name;
 			InputDataType = property.PropertyType.Name;
+
+			TypeArgs = property.PropertyType.GenericTypeArguments.Select(ta => new PropertyInfo(ta)).ToList();
+		}
+
+		public PropertyInfo(System.Type property) {
+			InputDataType = property.Name;
+
+			TypeArgs = property.GenericTypeArguments.Select(ta => new PropertyInfo(ta)).ToList();
 		}
 	}
 	
