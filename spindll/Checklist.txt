@@ -29,4 +29,5 @@ checklist
 // usability:
 []	starting the watcher should be part of the build processes
 []	watcher should only listen for ~ 30sec or 1 completion, whatever comes second.
-[]  configure command line params
+[]  configure command line params ie:
+		> spindll src:"/home/myr/_repo/spindll/bin/Debug/netcoreapp3.0/spindll.dll" output:"/home/myr/_repo/spindll/_testOutputs/"
