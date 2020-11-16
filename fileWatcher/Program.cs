@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Security.Permissions;
+using System.Collections.Generic;
+using System.Linq;
 
 public class fileWatcher
 {
@@ -58,7 +60,8 @@ public class fileWatcher
     private static void OnChanged(object source, FileSystemEventArgs e) {
 
         Console.WriteLine($"File: {e.FullPath} {e.ChangeType}");
-		spindll.Spindll.ExtractAndWrite();
+		string[] arguments = (new List<string>()).ToArray();
+		spindll.Spindll.ExtractAndWrite(arguments);
 	}
 
     private static void OnRenamed(object source, RenamedEventArgs e) =>

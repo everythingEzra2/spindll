@@ -13,21 +13,22 @@ checklist
 [X]	Nullable Classes
 [X]	Child properties
 [X]  Lists, arrays, enumerations, etc (of other Classes)
-[]  Dictionaries
 
 // annotations
-[] add the ability to add notation [spindll("[some-anSnotation]")]
-
-// display
-[]	Group Ids at top of file
-
-// enhancements
-[]  Allow existing text to persist
+[] add the ability to add notation [spindll("[some-annotation]")]
 
 // v1.0 checkpoint!
 [] 	cleanup, reorganize, modularize!
 []	setup watcher to watch for folder changes in certain folder!
 []  spindll input output
+
+// display
+[]	Group Ids at top of file
+
+// enhancements
+[]  Dictionaries
+[]  Allow existing text to persist
+
 
 // usability:
 []	starting the watcher should be part of the build processes

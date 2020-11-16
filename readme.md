@@ -1,3 +1,20 @@
-How to use:
+_What is Spindll? (Spin.dll)_
+- spindll can copy and convert backend classes into frontend classes.
+- this is usefull so that you dont have to re-write and consciously update front-end objects to match backend objects.
+- by automatically keeping front and back end objects in sync, model hydration should become super easy, thus reducing friction and fail-points in web-app development.
+example: you have a front-end SPA and a backend server that talk to each other. the backend project sends seriealizes a C# object and sends it to your front-end SPA. the front end project would deserialize the object to either an anonymous json object (which is error prone) OR to a .js/.ts object that is SUPPOSED to mimik the backend object (safe & preferable, but its a lot of work to keep backend+frontend models in sync). this is where spindll comes in.
 
- 
+_how to use:_
+- spindll will watch for changes in backend objects.
+- when a backend object is changed, it will extract the properties and create the corresponding front-end model to match each backend model.
+- this process is trggered by builds that change the target .dll.
+
+run watcher with these arguments
+- location of folder
+- output
+- filename to watch
+
+example:
+dotnet run "/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.0" "/home/myr/_repo/spindll/spindll/_testOutputs/" "spindll.dll"
+
+* note: working on making this an executable console app AND making it easier to use. (local pathing etc.)
