@@ -2,7 +2,8 @@ _What is Spindll? (Spin.dll)_
 - spindll can copy and convert backend classes into frontend classes.
 - this is usefull so that you dont have to re-write and consciously update front-end objects to match backend objects.
 - by automatically keeping front and back end objects in sync, model hydration should become super easy, thus reducing friction and fail-points in web-app development.
-example: you have a front-end SPA and a backend server that talk to each other. the backend project sends seriealizes a C# object and sends it to your front-end SPA. the front end project would deserialize the object to either an anonymous json object (which is error prone) OR to a .js/.ts object that is SUPPOSED to mimik the backend object (safe & preferable, but its a lot of work to keep backend+frontend models in sync). this is where spindll comes in.
+- example: you have a front-end SPA and a backend server that talk to each other. the backend project seriealizes a C# object and sends it to your front-end SPA. the front end project would deserialize the object to either an anonymous json object (which is error prone) OR to a .js/.ts object that is SUPPOSED to mimic the backend object (safe & preferable, but its a lot of work to keep backend+frontend models in sync). this is where spindll comes in.
+- the result (ideally) is super easy hydration that is always up-to-date with the actual models that are delivered to and from the backend.
 
 _how to use:_
 - spindll will watch for changes in backend objects.
