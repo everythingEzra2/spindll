@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using spindll.annotations;
 
 namespace spindll.Models
 {
 
 	class Dog
 	{
+		[SpindllProp("[TS_ENFORCE: bool]")]
 		public bool Fuzzy { get; set; }
 		public bool Borks { get; set; }
 		public string Name { get; set; }

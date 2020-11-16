@@ -1,5 +1,6 @@
 export class Dog {
 
+	[TS_ENFORCE: bool]
 	Fuzzy: boolean;
 	Borks: boolean;
 	Name: string;

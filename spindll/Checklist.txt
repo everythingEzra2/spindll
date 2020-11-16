@@ -15,7 +15,7 @@ checklist
 [X]  Lists, arrays, enumerations, etc (of other Classes)
 
 // annotations
-[] add the ability to add notation [spindll("[some-annotation]")]
+[X] add the ability to add notation [spindll("[some-annotation]")]
 
 // v1.0 checkpoint!
 [] 	cleanup, reorganize, modularize!
@@ -26,6 +26,7 @@ checklist
 []	Group Ids at top of file
 
 // enhancements
+[]  Add debounce (1 sec)
 []  Dictionaries
 []  Allow existing text to persist
 

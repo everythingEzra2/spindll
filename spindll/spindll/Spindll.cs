@@ -93,6 +93,12 @@ namespace spindll
 			builder.AppendLine($"export class {model.ModelName} {{\n");
 			model.Properties.ForEach(p => {
 
+				if (p.CustomAnnotations != null && p.CustomAnnotations.Any()) {
+					var annotations = string.Join("", p.CustomAnnotations.Select(a => $"\t{a}\n").ToList());
+					builder.Append(annotations);
+					// builder.Append("\n");
+				}
+
 				if (p.SystemDataType == Enum.DataTypeEnum.Array || 
 					p.SystemDataType == Enum.DataTypeEnum.List) {
 					builder.Append($"\t{p.PropertyName}: {p.TypeArgs.First().OutputDataType}[]");
