@@ -11,8 +11,8 @@
 			"preLaunchTask": "build",
 			"program": "${workspaceFolder}/bin/Debug/netcoreapp3.0/fileWatcher.dll",
 			"args": [
-				"/home/myr/_repo/spindll/bin/Debug/netcoreapp3.0",
-				"/home/myr/_repo/spindll/_testOutputs/",
+				"/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.0",
+				"/home/myr/_repo/spindll/spindll/_testOutputs/",
 				"spindll.dll"
 			],
 			"cwd": "${workspaceFolder}",

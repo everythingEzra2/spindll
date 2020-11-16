@@ -34,7 +34,7 @@ public class fileWatcher
                                 //  | NotifyFilters.DirectoryName;
 
             // Only watch text files.
-            watcher.Filter = fileName;
+            watcher.Filter = fileName;	// limit for now. should be removed when you can tag which files should be watched better
 
 
 
@@ -55,8 +55,11 @@ public class fileWatcher
     }
 
     // Define the event handlers.
-    private static void OnChanged(object source, FileSystemEventArgs e) =>
+    private static void OnChanged(object source, FileSystemEventArgs e) {
+
         Console.WriteLine($"File: {e.FullPath} {e.ChangeType}");
+		spindll.Spindll.ExtractAndWrite();
+	}
 
     private static void OnRenamed(object source, RenamedEventArgs e) =>
         Console.WriteLine($"File: {e.OldFullPath} renamed to {e.FullPath}");

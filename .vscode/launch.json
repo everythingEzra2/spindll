@@ -1,0 +1,36 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "WATCHER",
+			"type": "coreclr",
+			"request": "launch",
+			"preLaunchTask": "buildwatcher",
+			"program": "${workspaceFolder}/fileWatcher/bin/Debug/netcoreapp3.0/fileWatcher.dll",
+			"args": [
+				"/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.0",
+				"/home/myr/_repo/spindll/spindll/_testOutputs/",
+				"spindll.dll"
+			],
+			"cwd": "${workspaceFolder}",
+			"console": "internalConsole",
+			"stopAtEntry": false
+		},
+        {
+            "name": "SPINDLL",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildspindll",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/spindll/bin/Debug/netcoreapp3.0/spindll.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+	]
+}

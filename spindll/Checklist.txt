@@ -15,6 +15,9 @@ checklist
 [X]  Lists, arrays, enumerations, etc (of other Classes)
 []  Dictionaries
 
+// annotations
+[] add the ability to add notation [spindll("[some-anSnotation]")]
+
 // display
 []	Group Ids at top of file
 
@@ -30,4 +33,4 @@ checklist
 []	starting the watcher should be part of the build processes
 []	watcher should only listen for ~ 30sec or 1 completion, whatever comes second.
 []  configure command line params ie:
-		> spindll src:"/home/myr/_repo/spindll/bin/Debug/netcoreapp3.0/spindll.dll" output:"/home/myr/_repo/spindll/_testOutputs/"
+		> spindll src:"/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.0/spindll.dll" output:"/home/myr/_repo/spindll/spindll/_testOutputs/"
