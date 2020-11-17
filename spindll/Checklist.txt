@@ -18,9 +18,13 @@ checklist
 [X] add the ability to add notation [spindll("[some-annotation]")]
 
 // v1.0 checkpoint!
+[]	relative paths
 [] 	cleanup, reorganize, modularize!
 []	setup watcher to watch for folder changes in certain folder!
 []  spindll input output
+
+// usabilityol should be callable as a post build step, or run with a config file
+[]	to
 
 // display
 []	Group Ids at top of file
