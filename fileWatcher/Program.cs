@@ -62,6 +62,7 @@ public class fileWatcher
         Console.WriteLine($"File: {e.FullPath} {e.ChangeType}");
 		string[] arguments = (new List<string>()).ToArray();
 		spindll.Spindll.ExtractAndWrite(arguments);
+		Console.WriteLine($"DONE {DateTime.UtcNow.ToString()}");
 	}
 
     private static void OnRenamed(object source, RenamedEventArgs e) =>

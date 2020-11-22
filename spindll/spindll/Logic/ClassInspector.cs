@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Diagnostics;
+using System.Runtime.Loader;
+using System.IO;
 
 namespace spindll.Logic 
 {
@@ -9,15 +12,23 @@ namespace spindll.Logic
     {
         public static Type[] LoadDll(string filePath)
         {
-            var DLL = Assembly.LoadFile(filePath);
-
-			// var _type = DLL.GetType("F5Saver.Common.Models.Question");
-			// var _type2 = DLL.GetType("F5Saver.Common.Models.User");
+			var c = new PluginLoadContext();
+			var fileBytes = File.ReadAllBytes(filePath);
+			var stream = new MemoryStream(fileBytes);
+			var DLL = c.LoadFromStream(stream);
 
 			var _types = DLL.GetTypes();
-			// var obj = DLL.GetExportedTypes();
+
+			c.Unload();
 
 			return _types;
         }
     }
+
+	public class PluginLoadContext : AssemblyLoadContext
+	{
+		public PluginLoadContext() : base(isCollectible: true)
+		{
+		}
+	}
 }
