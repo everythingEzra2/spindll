@@ -19,6 +19,8 @@ checklist
 
 // v1.0 checkpoint!
 [X]	single file executable (dotnet publish -r linux-x64 -p:PublishSingleFile=true --self-contained false)
+[]	put exec in /lib or /bin and use relative paths from within a project to watch/run
+[]	add parent project to run either watcher or single run spindll ie "spindll -w -i . -o /testoutputs"
 []	relative paths
 [] 	cleanup, reorganize, modularize!
 []	setup watcher to watch for folder changes in certain folder!
