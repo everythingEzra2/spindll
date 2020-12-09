@@ -18,13 +18,14 @@ checklist
 [X] add the ability to add notation [spindll("[some-annotation]")]
 
 // v1.0 checkpoint!
+[X]	single file executable (dotnet publish -r linux-x64 -p:PublishSingleFile=true --self-contained false)
 []	relative paths
 [] 	cleanup, reorganize, modularize!
 []	setup watcher to watch for folder changes in certain folder!
 []  spindll input output
 
-// usabilityol should be callable as a post build step, or run with a config file
-[]	to
+// usability 
+[]	should be callable as a post build step, or run with a config file
 
 // display
 []	Group Ids at top of file
@@ -40,3 +41,5 @@ checklist
 []	watcher should only listen for ~ 30sec or 1 completion, whatever comes second.
 []  configure command line params ie:
 		> spindll src:"/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.0/spindll.dll" output:"/home/myr/_repo/spindll/spindll/_testOutputs/"
+[]	single file publish:
+		> dotnet publish -r linux-x64 -p:PublishSingleFile=true --self-contained false

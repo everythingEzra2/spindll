@@ -72,12 +72,18 @@ namespace spindll
 			var testTargets = new List<string>() { "Dog", "Leaf" };
 
 			var modelList = new List<ModelInfo>();
-			var typeList = types
+			// var typeList = types
+			// 	.Where(t => t.BaseType?.FullName != "System.Enum")
+			// 	.Where(t => testTargets.Any(tt => t.AssemblyQualifiedName.Contains(tt)))
+			// 	.ToList();
+
+			var markedForCopyName = nameof(spindll.annotations.SpindllMark);
+			var markedTypeList = types
 				.Where(t => t.BaseType?.FullName != "System.Enum")
-				.Where(t => testTargets.Any(tt => t.AssemblyQualifiedName.Contains(tt)))
+				.Where(a => a.CustomAttributes.Any(ca => ca.AttributeType.FullName.Contains(markedForCopyName)))
 				.ToList();
 
-			typeList.ForEach(t => {
+			markedTypeList.ForEach(t => {
 				var model = new ModelInfo(t);
 				modelList.Add(model);
 			});

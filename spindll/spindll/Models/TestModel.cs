@@ -6,7 +6,7 @@ using spindll.annotations;
 
 namespace spindll.Models
 {
-
+	[SpindllMark]
 	class Dog
 	{
 		[SpindllProp("[TS_ENFORCE: bool]")]
@@ -24,6 +24,7 @@ namespace spindll.Models
 		public string testProp = "test2";
 	}
 
+	[SpindllMark]
 	class Leaf
 	{
 		public int AgesInDays { get; set; }
