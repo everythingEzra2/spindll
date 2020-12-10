@@ -26,7 +26,9 @@
             "preLaunchTask": "buildspindll",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/spindll/bin/Debug/netcoreapp3.0/spindll.dll",
-            "args": [],
+			"args": ["./spindll/bin/Debug/netcoreapp3.0",
+				"./spindll/_testOutputs",
+				"spindll.dll"],
             "cwd": "${workspaceFolder}",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",

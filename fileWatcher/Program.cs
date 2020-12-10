@@ -6,6 +6,8 @@ using System.Linq;
 
 public class fileWatcher
 {
+	private static List<string> cliArguments {get;set;} = new List<string>();
+
     public static void Main(string[] args)
     {
 		if (args.Length != 3) 
@@ -23,6 +25,10 @@ public class fileWatcher
     // [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
     private static void Run(string sourceDirectory, string outputDirectory, string fileName)
     {
+		cliArguments = new List<string> {
+			sourceDirectory, outputDirectory, fileName
+		};
+
         // Create a new FileSystemWatcher and set its properties.
         using (FileSystemWatcher watcher = new FileSystemWatcher())
         {
@@ -60,7 +66,7 @@ public class fileWatcher
     private static void OnChanged(object source, FileSystemEventArgs e) {
 
         Console.WriteLine($"File: {e.FullPath} {e.ChangeType}");
-		string[] arguments = (new List<string>()).ToArray();
+		string[] arguments = (cliArguments).ToArray();
 		spindll.Spindll.ExtractAndWrite(arguments);
 		Console.WriteLine($"DONE {DateTime.UtcNow.ToString()}");
 	}
