@@ -29,6 +29,21 @@
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
-        },
+		},
+		{
+            "name": "SPINDLL.CLI",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildspindll",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/spindll.cli/bin/Debug/netcoreapp3.0/spindll.cli.dll",
+			"args": ["-w",
+				"-i ./spindll/bin/Debug/netcoreapp3.0/spindll.dll",
+				"-o ./spindll/_testOutputs"],
+            "cwd": "${workspaceFolder}",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        }
 	]
 }
