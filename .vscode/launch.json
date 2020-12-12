@@ -34,9 +34,9 @@
             "name": "SPINDLL.CLI",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "buildspindll",
+            "preLaunchTask": "buildspindllcli",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/spindll.cli/bin/Debug/netcoreapp3.0/spindll.cli.dll",
+            "program": "${workspaceFolder}/spindll.cli/bin/Debug/netcoreapp3.1/spindll.cli.dll",
 			"args": ["-w",
 				"-i ./spindll/bin/Debug/netcoreapp3.0/spindll.dll",
 				"-o ./spindll/_testOutputs"],

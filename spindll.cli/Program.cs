@@ -2,6 +2,8 @@
 using CommandLine;
 using System.Collections;
 using System.Collections.Generic;
+using spindll;
+using System.Linq;
 
 namespace spindll.cli
 {
@@ -16,15 +18,14 @@ namespace spindll.cli
 		}
 		static void RunOptions(Options opts)
 		{
-			//handle options
-		}
-		static void HandleParseError(List<Error> errs)
-		{
-			foreach (var error in errs)
-			{
-				// Console.log(error)	
+			var args = new string [2] { opts.Input, opts.Output };
+			args = args.Select(a => a.Trim(' ')).ToArray();
+			if (opts.Watch) {
+				spindll.fileWatcher.fileWatcher.Main(args);
+			} else {
+				spindll.Spindll.ExtractAndWrite(args);
 			}
-			//handle errors
+			//handle options
 		}
     }
 }
