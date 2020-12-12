@@ -49,9 +49,11 @@ namespace spindll
 				});
 			});
 
+			var definedClasses = models.Select(m => m.ModelName).ToList();
+
 			// build typescript class as string
 			var modelClassStrings = models
-				.ToDictionary(m => m.ModelName, m => buildClassString(m));
+				.ToDictionary(m => m.ModelName, m => buildClassString(m, definedClasses));
 				
 
 			foreach(var kvp in modelClassStrings) 
@@ -97,11 +99,33 @@ namespace spindll
 			return modelList;
 		}
 
-		static string buildClassString(ModelInfo model) 
+		static string buildClassString(ModelInfo model, List<string> definedClasses) 
 		{
 			String classString = string.Empty;
 			var builder = new System.Text.StringBuilder();
 
+			// ----- [START] Imports -----
+			// example: "import { Facility } from './Facility';"
+			var definedClassesInModel = model.Properties
+				.Where(p => definedClasses.Contains(p.InputDataType)) 
+				.Select(p => p.InputDataType)
+				.ToList();
+			var definedClassesAsSubTypes = model.Properties
+				.SelectMany(p => p.TypeArgs.Select(ta => ta.InputDataType))
+				.Where(t => definedClasses.Contains(t))
+				.ToList();
+			definedClassesInModel.AddRange(definedClassesAsSubTypes);
+			definedClassesInModel = definedClassesInModel.Distinct().ToList();
+
+			if (definedClassesInModel.Any()) {
+				definedClassesInModel.ForEach(dc => {
+					builder.AppendLine($"import {{{ dc }}} from './{dc}';");
+				});
+			}
+			builder.AppendLine();
+			// ----- [ END ] Imports -----	
+
+			// ----- [START] Class description -----
 			builder.AppendLine($"export class {model.ModelName} {{\n");
 			model.Properties.ForEach(p => {
 
@@ -137,6 +161,7 @@ namespace spindll
 				builder.AppendLine($";");
 			});
 			builder.AppendLine("\n}");
+			// ----- [ END ] Class description -----
 
 			return builder.ToString();
 		}

@@ -1,3 +1,5 @@
+import {Leaf} from './Leaf';
+
 export class Dog {
 
 	[TS_ENFORCE: bool]

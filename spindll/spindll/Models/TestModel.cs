@@ -9,7 +9,7 @@ namespace spindll.Models
 	[SpindllMark]
 	class Dog
 	{
-		[SpindllProp("[TS_ENFORCE: bool]")]
+		[SpindllProp("@IsNotEmpty()")]
 		public bool Fuzzy { get; set; }
 		public bool Borks { get; set; }
 		public string Name { get; set; }
