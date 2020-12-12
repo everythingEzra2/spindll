@@ -6,33 +6,42 @@ using System.Linq;
 
 public class fileWatcher
 {
-	private static List<string> cliArguments {get;set;} = new List<string>();
+	private static List<string> pathArguments {get;set;} = new List<string>();
+	// [Obsolete]
+	// private static List<string> cliArguments {get;set;} = new List<string>();
 
     public static void Main(string[] args)
     {
-		if (args.Length != 3) 
+		if (args.Length != 2) 
 		{
-			throw new ArgumentException("3 arguments required: SourceDirectory, outputDirectory, fileName");
+			throw new ArgumentException("3 arguments required: SourcePath, outputDirectory");
 		}
 
 		Console.WriteLine($"arg# {0} (source): {args[0]}");
 		Console.WriteLine($"arg# {1} (destination): {args[1]}");
-		Console.WriteLine($"arg# {2} (file??): {args[2]}");
+		// Console.WriteLine($"arg# {2} (file??): {args[2]}");
 
-        Run(args[0], args[1], args[2]);
+        Run(args[0], args[1]);
     }
 
     // [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-    private static void Run(string sourceDirectory, string outputDirectory, string fileName)
+    private static void Run(string sourcePath, string outputDirectory)
     {
-		cliArguments = new List<string> {
-			sourceDirectory, outputDirectory, fileName
+		if (string.IsNullOrEmpty(sourcePath) || string.IsNullOrEmpty(outputDirectory))
+			throw new ArgumentException("both dourcePath and outputDirectory are required");
+		pathArguments = new List<string>() {
+			sourcePath, outputDirectory
 		};
+
+		var fileName = Path.GetFileName(sourcePath);
+		var directory = Path.GetDirectoryName(sourcePath);
+		if (string.IsNullOrEmpty(fileName))
+			throw new ArgumentException("fileName not specified in sourcePath");
 
         // Create a new FileSystemWatcher and set its properties.
         using (FileSystemWatcher watcher = new FileSystemWatcher())
         {
-            watcher.Path = sourceDirectory;
+            watcher.Path = directory;
 
             // Watch for changes in LastAccess and LastWrite times, and
             // the renaming of files or directories.
@@ -54,7 +63,7 @@ public class fileWatcher
 
             // Begin watching.
             watcher.EnableRaisingEvents = true;
-			Console.WriteLine($"watching file: {sourceDirectory}/{fileName}");
+			Console.WriteLine($"watching file: {sourcePath}/{fileName}");
 
             // Wait for the user to quit the program.
             Console.WriteLine("Press 'q' to quit the sample.");
@@ -66,7 +75,7 @@ public class fileWatcher
     private static void OnChanged(object source, FileSystemEventArgs e) {
 
         Console.WriteLine($"File: {e.FullPath} {e.ChangeType}");
-		string[] arguments = (cliArguments).ToArray();
+		string[] arguments = (pathArguments).ToArray();
 		spindll.Spindll.ExtractAndWrite(arguments);
 		Console.WriteLine($"DONE {DateTime.UtcNow.ToString()}");
 	}

@@ -10,11 +10,8 @@
 			"request": "launch",
 			"preLaunchTask": "buildwatcher",
 			"program": "${workspaceFolder}/fileWatcher/bin/Debug/netcoreapp3.0/fileWatcher.dll",
-			"args": [
-				"/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.0",
-				"/home/myr/_repo/spindll/spindll/_testOutputs/",
-				"spindll.dll"
-			],
+			"args": ["./spindll/bin/Debug/netcoreapp3.0/spindll.dll",
+				"./spindll/_testOutputs"],
 			"cwd": "${workspaceFolder}",
 			"console": "internalConsole",
 			"stopAtEntry": false
@@ -26,9 +23,8 @@
             "preLaunchTask": "buildspindll",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/spindll/bin/Debug/netcoreapp3.0/spindll.dll",
-			"args": ["./spindll/bin/Debug/netcoreapp3.0",
-				"./spindll/_testOutputs",
-				"spindll.dll"],
+			"args": ["./spindll/bin/Debug/netcoreapp3.0/spindll.dll",
+				"./spindll/_testOutputs"],
             "cwd": "${workspaceFolder}",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",

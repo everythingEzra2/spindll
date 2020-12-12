@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using spindll.Logic;
@@ -19,24 +20,14 @@ namespace spindll
 			var source = "";
 
 			// source = @"C:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll";											//40
-			// source = @"D:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll";												//tower - spindll
+			// source = @"D:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll";											//tower - spindll
 			// source = @"D:\_repo\f5saver\f5saver.api\F5Saver.Common\bin\Debug\netstandard2.0\F5Saver.Common.dll";			//tower - f5saver
-			source = @"/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.0/spindll.dll";										//xubuntu
+			source = @"/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.0/spindll.dll";								//xubuntu
 			// source = @"/home/myr/_repo/f5saver/f5saver.api/F5Saver.Common/bin/Debug/netstandard2.0/F5Saver.Common.dll";	//xubuntu
 
-			// var types = ClassInspector.LoadDll(@"C:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll").ToList();											//40
-			// var types = ClassInspector.LoadDll(@"D:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll").ToList();												//tower - spindll
-			// var types = ClassInspector.LoadDll(@"D:\_repo\f5saver\f5saver.api\F5Saver.Common\bin\Debug\netstandard2.0\F5Saver.Common.dll").ToList();			//tower - f5saver
-			// var types = ClassInspector.LoadDll(@"/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.0/spindll.dll").ToList();										//xubuntu
-			// var types = ClassInspector.LoadDll(@"/home/myr/_repo/f5saver/f5saver.api/F5Saver.Common/bin/Debug/netstandard2.0/F5Saver.Common.dll").ToList();	//xubuntu
-
 			if (args.Any()) {
-				var sourceDir = args[0];
-				if (!sourceDir.EndsWith('/'))
-					sourceDir += '/';
-				source = sourceDir + args[2];
+				source = args[0];
 				Console.WriteLine($"loading From: {source}");
-
 				outputDirectory = args[1];
 			}
 
@@ -65,7 +56,8 @@ namespace spindll
 
 			foreach(var kvp in modelClassStrings) 
 			{
-				WriteStringToFile(kvp.Key, kvp.Value);
+				var filename = kvp.Key + ".ts";
+				WriteStringToFile(filename, kvp.Value);
 			}
         }
 
@@ -89,13 +81,7 @@ namespace spindll
 
 		static List<ModelInfo> extractModels(List<Type> types) 
 		{
-			var testTargets = new List<string>() { "Dog", "Leaf" };
-
 			var modelList = new List<ModelInfo>();
-			// var typeList = types
-			// 	.Where(t => t.BaseType?.FullName != "System.Enum")
-			// 	.Where(t => testTargets.Any(tt => t.AssemblyQualifiedName.Contains(tt)))
-			// 	.ToList();
 
 			var markedForCopyName = nameof(spindll.annotations.SpindllMark);
 			var markedTypeList = types
@@ -157,12 +143,9 @@ namespace spindll
 
 		static void WriteStringToFile(string filename, string content) 
 		{
-			if (!outputDirectory.EndsWith('/')) {
-				outputDirectory += '/';
-			}
-			var completeFilePath = $"{outputDirectory}{filename}.ts";
-			Console.WriteLine($"write to: {completeFilePath}");
-			System.IO.File.WriteAllText(completeFilePath, content);
+			var outputFilePath = Path.Combine(outputDirectory, filename);
+			Console.WriteLine($"write to: {outputFilePath}");
+			System.IO.File.WriteAllText(outputFilePath, content);
 		}
     }
 }

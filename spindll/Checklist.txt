@@ -19,12 +19,12 @@ checklist
 
 // v1.0 checkpoint!
 [X]	single file executable (dotnet publish -r linux-x64 -p:PublishSingleFile=true --self-contained false)
-[]	put exec in /lib or /bin and use relative paths from within a project to watch/run
+[X]	put exec in /lib or /bin and use relative paths from within a project to watch/run
+[X]	Make Cross platform (paths should work on both windows and linux)
+[X]	first arg should be one path, not 2
+[X]	relative paths
 []	add parent project to run either watcher or single run spindll ie "spindll -w -i . -o /testoutputs"
-[]	relative paths
 [] 	cleanup, reorganize, modularize!
-[]	setup watcher to watch for folder changes in certain folder!
-[]  spindll input output
 
 // usability 
 []	should be callable as a post build step, or run with a config file
@@ -44,4 +44,8 @@ checklist
 []  configure command line params ie:
 		> spindll src:"/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.0/spindll.dll" output:"/home/myr/_repo/spindll/spindll/_testOutputs/"
 []	single file publish:
-		> dotnet publish -r linux-x64 -p:PublishSingleFile=true --self-contained false
+		> dotnet publish -c Release -r linux-x64 -p:PublishSingleFile=true --self-contained true
+		> dotnet publish -c Release -r win-x64 -p:PublishSingleFile=true --self-contained true
+		> dotnet publish -c Release -r osx-x64 -p:PublishSingleFile=true --self-contained true
+[]	force rebuild
+		> dotnet build --no-incremental
