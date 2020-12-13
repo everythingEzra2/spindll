@@ -1,8 +1,8 @@
-import {Leaf} from './Leaf';
+import { Leaf } from './Leaf';
 
 export class Dog {
 
-	[TS_ENFORCE: bool]
+	@IsNotEmpty()
 	Fuzzy: boolean;
 	Borks: boolean;
 	Name: string;

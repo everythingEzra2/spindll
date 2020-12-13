@@ -119,7 +119,7 @@ namespace spindll
 
 			if (definedClassesInModel.Any()) {
 				definedClassesInModel.ForEach(dc => {
-					builder.AppendLine($"import {{{ dc }}} from './{dc}';");
+					builder.AppendLine($"import {{ { dc } }} from './{dc}';");
 				});
 			}
 			builder.AppendLine();

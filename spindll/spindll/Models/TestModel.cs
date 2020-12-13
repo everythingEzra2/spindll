@@ -29,5 +29,6 @@ namespace spindll.Models
 	{
 		public int AgesInDays { get; set; }
 		public int OrderAquired { get; set; }
+		public Dog parent { get; set; }
 	}
 }
