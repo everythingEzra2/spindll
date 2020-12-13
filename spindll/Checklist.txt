@@ -26,6 +26,10 @@ checklist
 [X] create a dictionary of custom classes, if a class is used in a file, include an import.
 [X]	add parent project to run either watcher or single run spindll ie "spindll -w -i . -o /testoutputs"
 
+// CI/CD
+[] deploy to nuget/chocolatey
+[] pushes to develop should build for all 3environments & trigger a push to chosen repo 
+
 // basic requirements
 []	cleanup, reorganize, modularize!
 []	add annotation for custom imports ontop of class
