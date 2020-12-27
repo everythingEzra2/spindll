@@ -14,8 +14,8 @@ namespace spindll.Models
 	}
 
 	[SpindllMark]
-	[SpindllInheritance("inherits IDated")]
-	[SpindllProp("-- this is a spindll prop --")]
+	[SpindllInheritance("extends IDated")]
+	[SpindllProp("//-- this is a spindll prop --")]
 	class Dog //: IDated
 	{
 		[SpindllProp("@IsNotEmpty()")]

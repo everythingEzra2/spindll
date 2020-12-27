@@ -129,7 +129,7 @@ namespace spindll
 			model.CustomAnnotations.ForEach(ca => {
 				builder.AppendLine(ca);
 			});
-			builder.AppendLine($"export class {model.ModelName} {model.Inheritance}{{\n");
+			builder.AppendLine($"export class {model.ModelName} {model.InheritanceString}{{\n");
 			model.Properties.ForEach(p => {
 
 				if (p.CustomAnnotations != null && p.CustomAnnotations.Any()) {
