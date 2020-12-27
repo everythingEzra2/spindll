@@ -8,10 +8,15 @@ namespace spindll.Models {
 
 	class ModelInfo {
 		public string ModelName;
+		public string InheritanceString;
+		public List<string> CustomAnnotations = new List<string>(); 
 		public List<PropertyInfo> Properties = new List<PropertyInfo>();
 
 		public ModelInfo(Type type) {
 			ModelName = type.FullName.Split('.').ToList().LastOrDefault(); ;
+
+			InheritanceString = Annotations.ExtractCustomSpindllAttributes("SpindllInheritance", type.CustomAttributes.ToList()).FirstOrDefault();
+			CustomAnnotations = Annotations.ExtractCustomSpindllAttributes("SpindllProp", type.CustomAttributes.ToList());
 
 			var properties = type.GetProperties().ToList();
 			

@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using spindll.Enum;
+using spindll.annotations;
 
 namespace spindll.Models {
 
@@ -21,7 +22,7 @@ namespace spindll.Models {
 			PropertyName = property.Name;
 			InputDataType = property.PropertyType.Name;
 
-			CustomAnnotations = ExtractCustomSpindllAttributes(property.CustomAttributes.ToList());
+			CustomAnnotations = Annotations.ExtractCustomSpindllAttributes("SpindllProp", property.CustomAttributes.ToList());
 
 			TypeArgs = property.PropertyType.GenericTypeArguments.Select(ta => new PropertyInfo(ta)).ToList();
 		}
@@ -29,24 +30,24 @@ namespace spindll.Models {
 		public PropertyInfo(System.Type property) {
 			InputDataType = property.Name;
 
-			CustomAnnotations = ExtractCustomSpindllAttributes(property.CustomAttributes.ToList());
+			CustomAnnotations = Annotations.ExtractCustomSpindllAttributes("SpindllProp", property.CustomAttributes.ToList());
 
 			TypeArgs = property.GenericTypeArguments.Select(ta => new PropertyInfo(ta)).ToList();
 		}
 
-		public static List<string> ExtractCustomSpindllAttributes(List<CustomAttributeData> customAttributes) {
-			if (!customAttributes.Any())
-				return new List<string>();
+		// public static List<string> ExtractCustomSpindllAttributes(List<CustomAttributeData> customAttributes) {
+		// 	if (!customAttributes.Any())
+		// 		return new List<string>();
 
-			var propTypeName = "SpindllProp";
-			var spindllAttribs = customAttributes
-				.Where(a => a.AttributeType.FullName.Contains(propTypeName))
-				.ToList();
+		// 	var propTypeName = "SpindllProp";
+		// 	var spindllAttribs = customAttributes
+		// 		.Where(a => a.AttributeType.FullName.Contains(propTypeName))
+		// 		.ToList();
 
-			return spindllAttribs
-				.Select(sa => sa.ConstructorArguments.FirstOrDefault().Value.ToString())
-				.ToList();
-		}
+		// 	return spindllAttribs
+		// 		.Select(sa => sa.ConstructorArguments.FirstOrDefault().Value.ToString())
+		// 		.ToList();
+		// }
 	}
 	
 

@@ -6,8 +6,17 @@ using spindll.annotations;
 
 namespace spindll.Models
 {
+	interface IDated
+	{
+		DateTime DateCreated { get; set; }
+		DateTime DateUpdated { get; set; }
+		DateTime DateDeleted { get; set; }
+	}
+
 	[SpindllMark]
-	class Dog
+	[SpindllInheritance("inherits IDated")]
+	[SpindllProp("-- this is a spindll prop --")]
+	class Dog //: IDated
 	{
 		[SpindllProp("@IsNotEmpty()")]
 		public bool Fuzzy { get; set; }

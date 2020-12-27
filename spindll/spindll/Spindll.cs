@@ -126,7 +126,10 @@ namespace spindll
 			// ----- [ END ] Imports -----	
 
 			// ----- [START] Class description -----
-			builder.AppendLine($"export class {model.ModelName} {{\n");
+			model.CustomAnnotations.ForEach(ca => {
+				builder.AppendLine(ca);
+			});
+			builder.AppendLine($"export class {model.ModelName} {model.Inheritance}{{\n");
 			model.Properties.ForEach(p => {
 
 				if (p.CustomAnnotations != null && p.CustomAnnotations.Any()) {

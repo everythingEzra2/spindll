@@ -25,6 +25,8 @@ checklist
 [X]	relative paths
 [X] create a dictionary of custom classes, if a class is used in a file, include an import.
 [X]	add parent project to run either watcher or single run spindll ie "spindll -w -i . -o /testoutputs"
+[] class annotations
+[] inheritance annotation
 
 // CI/CD
 [] deploy to nuget/chocolatey
