@@ -58,5 +58,7 @@ checklist
 		> dotnet publish -c Release -r linux-x64 -p:PublishSingleFile=true --self-contained true
 		> dotnet publish -c Release -r win-x64 -p:PublishSingleFile=true --self-contained true
 		> dotnet publish -c Release -r osx-x64 -p:PublishSingleFile=true --self-contained true
+[]	publish spindll from root
+		> dotnet publish ./spindll.cli/spindll.cli.csproj -c Release -r win-x64 -p:PublishSingleFile=true --self-contained true 
 []	force rebuild
 		> dotnet build --no-incremental
