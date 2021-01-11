@@ -28,8 +28,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: spindll release - r_${{ github.ref }}
+          tag_name: ${{ steps.date.outputs.date }}
+          release_name: spindll release - ${{ steps.date.outputs.date }}
           draft: false
           prerelease: false
       - name: Upload win-x64 Asset
