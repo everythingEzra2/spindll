@@ -24,7 +24,7 @@ jobs:
         run: dotnet publish ./spindll.cli/spindll.cli.csproj -c Release -r osx-x64 -p:PublishSingleFile=true --self-contained true
       - name: Date string for tag
         id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d.%s')"
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
