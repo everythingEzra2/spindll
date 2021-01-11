@@ -1,3 +1,13 @@
+installation:
+- download the latest "spindll" file from releases: https://github.com/everythingEzra2/spindll/releases
+- place "spindll" in your bin folder (or somewhere accessible by your Path)
+- use like so:
+`spindll -w -i "./PATH/TO/BUILD/OUTPUT.dll" -o "./PATH/TO/OUTPUT/DIRECTORY"`
+
+example usage: 
+- spin
+
+
 _What is Spindll? (Spin.dll)_
 - spindll can copy and convert backend classes into frontend classes.
 - this is usefull so that you dont have to re-write and consciously update front-end objects to match backend objects.

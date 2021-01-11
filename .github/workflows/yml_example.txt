@@ -1,0 +1,58 @@
+name: sagevision CI > live
+
+on:
+  # trigger pipeline when live gets new changes.
+  push:
+    branches:
+      - live
+  pull_request:
+    branches:
+      - live
+
+jobs:
+  # remove old files
+  clean_directory:
+    runs-on: [self-hosted, live, ARM64]
+    steps:
+    - name: remove server
+      run: sudo rm -rf sagevision.server
+    - name: remove data
+      run: sudo rm -rf sagevision.data
+    - name: remove common
+      run: sudo rm -rf sagevision.common
+
+  # get latest from repo.
+  pull_latest:
+    needs: clean_directory
+    runs-on: [self-hosted, live, ARM64]
+    steps:
+    - uses: actions/checkout@v1
+
+  # deploy server steps.
+  deploy_server:
+    needs: pull_latest
+    runs-on: [self-hosted, live, ARM64]
+
+    steps:
+    - name: kill running server
+      run: |
+        if sudo pm2 list | grep -v WARN | grep -q sagevision_server; then
+          sudo pm2 delete sagevision_server
+        fi
+    - name: sagevision > server > clean
+      run: sudo dotnet clean sagevision.server/
+    - name: sagevision > server > build
+      run: sudo dotnet build -r ubuntu.19.10-arm64 --configuration Release sagevision.server/
+    - name: sagevision > server > sass
+      run: sass sagevision.server/App.scss sagevision.server/wwwroot/css/compiledScss/App.css
+    - name: sagevision > server > run
+      run: sudo pm2 start dotnet --name "sagevision_server" -- run  --environment "Live" --configuration Release --project sagevision.server/
+
+	  ---------------------------------------------------------
+
+
+	create release .yml:
+	---------------------------------
+	- name: Create a Release
+  	  uses: actions/create-release@v1
+	---------------------------------
