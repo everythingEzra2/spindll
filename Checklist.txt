@@ -29,6 +29,7 @@ checklist
 [X] inheritance annotation
 
 // CI/CD
+[X] deploy to github-releases
 [] deploy to nuget/chocolatey
 [] pushes to develop should build for all 3environments & trigger a push to chosen repo 
 
