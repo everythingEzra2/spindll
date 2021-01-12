@@ -29,6 +29,7 @@ checklist
 [X] inheritance annotation
 
 // CI/CD
+[X] deploy to github-releases
 [] deploy to nuget/chocolatey
 [] pushes to develop should build for all 3environments & trigger a push to chosen repo 
 
@@ -55,8 +56,8 @@ checklist
 []  configure command line params ie:
 		> spindll src:"/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.0/spindll.dll" output:"/home/myr/_repo/spindll/spindll/_testOutputs/"
 []	single file publish:
-		> dotnet publish -c Release -r linux-x64 -p:PublishSingleFile=true --self-contained true
 		> dotnet publish -c Release -r win-x64 -p:PublishSingleFile=true --self-contained true
+		> dotnet publish -c Release -r linux-x64 -p:PublishSingleFile=true --self-contained true
 		> dotnet publish -c Release -r osx-x64 -p:PublishSingleFile=true --self-contained true
 []	publish spindll from root
 		> dotnet publish ./spindll.cli/spindll.cli.csproj -c Release -r win-x64 -p:PublishSingleFile=true --self-contained true 
