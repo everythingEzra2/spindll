@@ -1,5 +1,5 @@
 installation:
-- download the latest "spindll" file from releases: https://github.com/everythingEzra2/spindll/releases
+- download the latest "spindll" file from releases: https://github.com/everythingEzra2/spindll/releases/latest
 - place "spindll" in your bin folder (or somewhere accessible by your Path)
 - use like so:
 
