@@ -1,6 +1,7 @@
 import { Leaf } from './Leaf';
 
-export class Dog {
+//-- this is a spindll prop --
+export class Dog extends IDated{
 
 	@IsNotEmpty()
 	Fuzzy: boolean;

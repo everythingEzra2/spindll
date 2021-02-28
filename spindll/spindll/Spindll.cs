@@ -18,8 +18,6 @@ namespace spindll
 		public static void ExtractAndWrite(string[] args)
         {
 			try {
-
-				
 				var source = "";
 
 				// source = @"C:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll";											//40
@@ -135,7 +133,8 @@ namespace spindll
 			model.CustomAnnotations.ForEach(ca => {
 				builder.AppendLine(ca);
 			});
-			builder.AppendLine($"export class {model.ModelName} {model}{{\n");
+			
+			builder.AppendLine($"export class {model.ModelName} {model.InheritanceString}{{\n");
 			model.Properties.ForEach(p => {
 
 				if (p.CustomAnnotations != null && p.CustomAnnotations.Any()) {

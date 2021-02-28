@@ -1,0 +1,68 @@
+name: Spindll > build and release
+
+on:
+  # trigger pipeline when live gets new changes.
+  push:
+    branches:
+      - release
+  pull_request:
+    branches:
+      - release
+
+jobs:
+  build:
+    name: Build and Upload Release Asset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build win-x64
+        run: dotnet publish ./spindll.cli/spindll.cli.csproj -c Release -r win-x64 -p:PublishSingleFile=true --self-contained true
+      - name: Build linux-x64
+        run: dotnet publish ./spindll.cli/spindll.cli.csproj -c Release -r linux-x64 -p:PublishSingleFile=true --self-contained true
+      - name: Build osx-x64
+        run: dotnet publish ./spindll.cli/spindll.cli.csproj -c Release -r osx-x64 -p:PublishSingleFile=true --self-contained true
+      - name: Date string for tag
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d.%s')"
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.date.outputs.date }}
+          release_name: spindll release - ${{ steps.date.outputs.date }}
+          draft: false
+          prerelease: false
+      - name: Upload win-x64 Asset
+        id: upload-release-asset-win-x64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./spindll.cli/bin/Release/netcoreapp3.1/win-x64/publish/spindll.cli.exe
+          asset_name: spindll_win
+          asset_content_type: application/vnd.microsoft.portable-executable
+      - name: Upload linux-x64 Asset
+        id: upload-release-asset-linux-x64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./spindll.cli/bin/Release/netcoreapp3.1/linux-x64/publish/spindll.cli
+          asset_name: spindll_linux
+          asset_content_type: application/x-binary
+      - name: Upload osx-x64 Asset
+        id: upload-release-asset-osx-x64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./spindll.cli/bin/Release/netcoreapp3.1/osx-x64/publish/spindll.cli
+          asset_name: spindll_osx
+          asset_content_type: application/x-binary
+      
