@@ -63,7 +63,7 @@ namespace spindll
 					WriteStringToFile(filename, kvp.Value);
 				}
 			} catch (Exception e) {
-				Console.WriteLine(e.ToString())
+				Console.WriteLine(e.ToString());
 			}
         }
 
