@@ -17,49 +17,55 @@ namespace spindll
 
 		public static void ExtractAndWrite(string[] args)
         {
-			var source = "";
+			try {
 
-			// source = @"C:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll";											//40
-			// source = @"D:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll";											//tower - spindll
-			// source = @"D:\_repo\f5saver\f5saver.api\F5Saver.Common\bin\Debug\netstandard2.0\F5Saver.Common.dll";			//tower - f5saver
-			source = @"/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.0/spindll.dll";								//xubuntu
-			// source = @"/home/myr/_repo/f5saver/f5saver.api/F5Saver.Common/bin/Debug/netstandard2.0/F5Saver.Common.dll";	//xubuntu
-
-			if (args.Any()) {
-				source = args[0];
-				Console.WriteLine($"loading From: {source}");
-				outputDirectory = args[1];
-			}
-
-			var types = ClassInspector.LoadDll(source).ToList();
-
-			var models = extractModels(types);
-
-			//convert types to System
-			var CSharpIn = new LanguagePair(LanguageEnum.CSharp, LanguageEnum.System);
-			var TypeScriptOut = new LanguagePair(LanguageEnum.System, LanguageEnum.TypeScript);
-			var languageDictionary = new LanguageMappingDictionary(CSharpIn, TypeScriptOut);
-			var inDict = languageDictionary[CSharpIn];
-			var outDict = languageDictionary.LanguageDictionary[TypeScriptOut];
-
-			// fill out intermediary types
-			models.ForEach(model => {
-				model.Properties.ForEach(prop => {
-					convertProperty(ref prop, inDict, outDict);
-				});
-			});
-
-			var definedClasses = models.Select(m => m.ModelName).ToList();
-
-			// build typescript class as string
-			var modelClassStrings = models
-				.ToDictionary(m => m.ModelName, m => buildClassString(m, definedClasses));
 				
+				var source = "";
 
-			foreach(var kvp in modelClassStrings) 
-			{
-				var filename = kvp.Key + ".ts";
-				WriteStringToFile(filename, kvp.Value);
+				// source = @"C:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll";											//40
+				// source = @"D:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll";											//tower - spindll
+				// source = @"D:\_repo\f5saver\f5saver.api\F5Saver.Common\bin\Debug\netstandard2.0\F5Saver.Common.dll";			//tower - f5saver
+				source = @"/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.0/spindll.dll";								//xubuntu
+				// source = @"/home/myr/_repo/f5saver/f5saver.api/F5Saver.Common/bin/Debug/netstandard2.0/F5Saver.Common.dll";	//xubuntu
+
+				if (args.Any()) {
+					source = args[0];
+					Console.WriteLine($"loading From: {source}");
+					outputDirectory = args[1];
+				}
+
+				var types = ClassInspector.LoadDll(source).ToList();
+
+				var models = extractModels(types);
+
+				//convert types to System
+				var CSharpIn = new LanguagePair(LanguageEnum.CSharp, LanguageEnum.System);
+				var TypeScriptOut = new LanguagePair(LanguageEnum.System, LanguageEnum.TypeScript);
+				var languageDictionary = new LanguageMappingDictionary(CSharpIn, TypeScriptOut);
+				var inDict = languageDictionary[CSharpIn];
+				var outDict = languageDictionary.LanguageDictionary[TypeScriptOut];
+
+				// fill out intermediary types
+				models.ForEach(model => {
+					model.Properties.ForEach(prop => {
+						convertProperty(ref prop, inDict, outDict);
+					});
+				});
+
+				var definedClasses = models.Select(m => m.ModelName).ToList();
+
+				// build typescript class as string
+				var modelClassStrings = models
+					.ToDictionary(m => m.ModelName, m => buildClassString(m, definedClasses));
+					
+
+				foreach(var kvp in modelClassStrings) 
+				{
+					var filename = kvp.Key + ".ts";
+					WriteStringToFile(filename, kvp.Value);
+				}
+			} catch (Exception e) {
+				Console.WriteLine(e.ToString())
 			}
         }
 
@@ -129,7 +135,7 @@ namespace spindll
 			model.CustomAnnotations.ForEach(ca => {
 				builder.AppendLine(ca);
 			});
-			builder.AppendLine($"export class {model.ModelName} {model.Inheritance}{{\n");
+			builder.AppendLine($"export class {model.ModelName} {model}{{\n");
 			model.Properties.ForEach(p => {
 
 				if (p.CustomAnnotations != null && p.CustomAnnotations.Any()) {
