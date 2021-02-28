@@ -17,49 +17,53 @@ namespace spindll
 
 		public static void ExtractAndWrite(string[] args)
         {
-			var source = "";
+			try {
+				var source = "";
 
-			// source = @"C:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll";											//40
-			// source = @"D:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll";											//tower - spindll
-			// source = @"D:\_repo\f5saver\f5saver.api\F5Saver.Common\bin\Debug\netstandard2.0\F5Saver.Common.dll";			//tower - f5saver
-			source = @"/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.0/spindll.dll";								//xubuntu
-			// source = @"/home/myr/_repo/f5saver/f5saver.api/F5Saver.Common/bin/Debug/netstandard2.0/F5Saver.Common.dll";	//xubuntu
+				// source = @"C:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll";											//40
+				// source = @"D:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll";											//tower - spindll
+				// source = @"D:\_repo\f5saver\f5saver.api\F5Saver.Common\bin\Debug\netstandard2.0\F5Saver.Common.dll";			//tower - f5saver
+				source = @"/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.0/spindll.dll";								//xubuntu
+				// source = @"/home/myr/_repo/f5saver/f5saver.api/F5Saver.Common/bin/Debug/netstandard2.0/F5Saver.Common.dll";	//xubuntu
 
-			if (args.Any()) {
-				source = args[0];
-				Console.WriteLine($"loading From: {source}");
-				outputDirectory = args[1];
-			}
+				if (args.Any()) {
+					source = args[0];
+					Console.WriteLine($"loading From: {source}");
+					outputDirectory = args[1];
+				}
 
-			var types = ClassInspector.LoadDll(source).ToList();
+				var types = ClassInspector.LoadDll(source).ToList();
 
-			var models = extractModels(types);
+				var models = extractModels(types);
 
-			//convert types to System
-			var CSharpIn = new LanguagePair(LanguageEnum.CSharp, LanguageEnum.System);
-			var TypeScriptOut = new LanguagePair(LanguageEnum.System, LanguageEnum.TypeScript);
-			var languageDictionary = new LanguageMappingDictionary(CSharpIn, TypeScriptOut);
-			var inDict = languageDictionary[CSharpIn];
-			var outDict = languageDictionary.LanguageDictionary[TypeScriptOut];
+				//convert types to System
+				var CSharpIn = new LanguagePair(LanguageEnum.CSharp, LanguageEnum.System);
+				var TypeScriptOut = new LanguagePair(LanguageEnum.System, LanguageEnum.TypeScript);
+				var languageDictionary = new LanguageMappingDictionary(CSharpIn, TypeScriptOut);
+				var inDict = languageDictionary[CSharpIn];
+				var outDict = languageDictionary.LanguageDictionary[TypeScriptOut];
 
-			// fill out intermediary types
-			models.ForEach(model => {
-				model.Properties.ForEach(prop => {
-					convertProperty(ref prop, inDict, outDict);
+				// fill out intermediary types
+				models.ForEach(model => {
+					model.Properties.ForEach(prop => {
+						convertProperty(ref prop, inDict, outDict);
+					});
 				});
-			});
 
-			var definedClasses = models.Select(m => m.ModelName).ToList();
+				var definedClasses = models.Select(m => m.ModelName).ToList();
 
-			// build typescript class as string
-			var modelClassStrings = models
-				.ToDictionary(m => m.ModelName, m => buildClassString(m, definedClasses));
-				
+				// build typescript class as string
+				var modelClassStrings = models
+					.ToDictionary(m => m.ModelName, m => buildClassString(m, definedClasses));
+					
 
-			foreach(var kvp in modelClassStrings) 
-			{
-				var filename = kvp.Key + ".ts";
-				WriteStringToFile(filename, kvp.Value);
+				foreach(var kvp in modelClassStrings) 
+				{
+					var filename = kvp.Key + ".ts";
+					WriteStringToFile(filename, kvp.Value);
+				}
+			} catch (Exception e) {
+				Console.WriteLine(e.ToString())
 			}
         }
 
@@ -129,6 +133,7 @@ namespace spindll
 			model.CustomAnnotations.ForEach(ca => {
 				builder.AppendLine(ca);
 			});
+			
 			builder.AppendLine($"export class {model.ModelName} {model.InheritanceString}{{\n");
 			model.Properties.ForEach(p => {
 
