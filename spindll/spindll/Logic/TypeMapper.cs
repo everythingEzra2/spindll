@@ -58,6 +58,7 @@ namespace spindll.Logic {
 			cSharpTypePairs.Add("Long", DataTypeEnum.Long.ToString());
 			cSharpTypePairs.Add("List`1", DataTypeEnum.List.ToString());
 			cSharpTypePairs.Add("Array`1", DataTypeEnum.Array.ToString());
+			cSharpTypePairs.Add("Nullable`1", DataTypeEnum.Unwrap.ToString());
 
 			return cSharpTypePairs;
 		}
