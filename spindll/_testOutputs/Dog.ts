@@ -13,5 +13,6 @@ export class Dog extends IDated{
 	ArrayLeaves: Leaf[];
 	FavoriteLeaf: Leaf;
 	currentLeaf: Leaf;
+	LastChecked: Date;
 
 }
