@@ -27,7 +27,9 @@ checklist
 [X]	add parent project to run either watcher or single run spindll ie "spindll -w -i . -o /testoutputs"
 [X] class annotations
 [X] inheritance annotation
-[ ] Pull out annotations to annotation project
+[X] Pull out annotations to annotation project
+
+[ ] ADD SUPPORT FOR ENUMS!!
 
 // CI/CD
 [X] deploy to github-releases
