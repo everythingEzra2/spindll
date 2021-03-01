@@ -23,7 +23,7 @@ namespace spindll
 				// source = @"C:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll";											//40
 				// source = @"D:\_repo\spindll\bin\Debug\netcoreapp3.0\spindll.dll";											//tower - spindll
 				// source = @"D:\_repo\f5saver\f5saver.api\F5Saver.Common\bin\Debug\netstandard2.0\F5Saver.Common.dll";			//tower - f5saver
-				source = @"/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.0/spindll.dll";								//xubuntu
+				source = @"/home/myr/_repo/spindll/spindll/bin/Debug/netcoreapp3.1/spindll.dll";								//xubuntu
 				// source = @"/home/myr/_repo/f5saver/f5saver.api/F5Saver.Common/bin/Debug/netstandard2.0/F5Saver.Common.dll";	//xubuntu
 
 				if (args.Any()) {
@@ -69,12 +69,24 @@ namespace spindll
 
 		static void convertProperty(ref PropertyInfo prop, Dictionary<string, string> inDict, Dictionary<string, string> outDict) {
 			
-			if (inDict.ContainsKey(prop.InputDataType)) {
+			if (inDict.ContainsKey(prop.InputDataType)) 
+			{
 				var intermediaryType = inDict[prop.InputDataType];
-				prop.SystemDataType = (DataTypeEnum) System.Enum.Parse(typeof(Enum.DataTypeEnum) ,intermediaryType);
+
+				if (System.Enum.TryParse(typeof(Enum.DataTypeEnum), intermediaryType, out var dataType) && ((DataTypeEnum) dataType) == DataTypeEnum.Unwrap) {
+					var unwrapTarget = prop.TypeArgs.FirstOrDefault();
+					intermediaryType = inDict[unwrapTarget.InputDataType];
+					prop.SystemDataType = (DataTypeEnum) System.Enum.Parse(typeof(Enum.DataTypeEnum), intermediaryType);
+					prop.OutputDataType = outDict[intermediaryType];
+					prop.TypeArgs = new List<PropertyInfo>();
+					return;
+				}
+
+				prop.SystemDataType = (DataTypeEnum) System.Enum.Parse(typeof(Enum.DataTypeEnum), intermediaryType);
 				prop.OutputDataType = outDict[intermediaryType];
-				
-			} else {
+			} 
+			else 
+			{
 				var intermediaryType = prop.InputDataType;
 				prop.SystemDataType = DataTypeEnum.DirectMap;
 				prop.OutputDataType = intermediaryType;

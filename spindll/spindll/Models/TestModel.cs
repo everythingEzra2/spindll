@@ -30,7 +30,10 @@ namespace spindll.Models
 		public Leaf FavoriteLeaf { get; set; }
 		public Leaf? currentLeaf { get; set; }
 
+		public DateTime? LastChecked { get; set; }
+		
 		public string testProp = "test2";
+
 	}
 
 	[SpindllMark]

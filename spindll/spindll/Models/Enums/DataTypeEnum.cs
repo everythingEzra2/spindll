@@ -21,6 +21,9 @@ namespace spindll.Enum {
 		Class,
 
 		// No key, map directly
-		DirectMap
+		DirectMap,
+
+		// No key, unwrap and map inner
+		Unwrap
 	}
 }
